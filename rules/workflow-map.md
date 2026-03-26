@@ -36,7 +36,7 @@ Route to the right tool at each stage:
 ### 7. Learning & Health
 - Extract patterns → /learn
 - Manage rules → /rules
-- Compress context → /compact
+- Compress context → /save-compact
 
 ### Work Mode Routing
 - Building .claude/ architecture: harness-audit → /rules → prompt-audit → /harness-audit (iterate)

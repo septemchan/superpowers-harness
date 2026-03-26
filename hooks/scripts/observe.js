@@ -9,6 +9,10 @@ const BEARER_PATTERN = /bearer\s+[A-Za-z0-9._\-]{20,}/gi;
 const AUTH_HEADER_PATTERN = /authorization:\s*(Bearer|Basic)\s+[A-Za-z0-9._\-]{20,}/gi;
 
 try {
+  // Only record in git repositories to avoid writing in system/temp directories
+  const cwd = process.cwd();
+  if (!fs.existsSync(path.join(cwd, '.git'))) process.exit(0);
+
   const input = readStdin();
   const toolName = input?.tool_name || input?.tool || 'unknown';
   const toolInput = JSON.stringify(input?.tool_input || '').slice(0, MAX_FIELD_LEN);
@@ -20,7 +24,6 @@ try {
     .replace(BEARER_PATTERN, '[SCRUBBED]')
     .replace(AUTH_HEADER_PATTERN, '[SCRUBBED]');
 
-  const cwd = process.cwd();
   const record = {
     timestamp: new Date().toISOString(),
     session_id: process.env.CLAUDE_SESSION_ID || getSessionId(cwd),
@@ -48,7 +51,7 @@ try {
   if (fs.existsSync(obsFile)) {
     const stats = fs.statSync(obsFile);
     if (stats.size > MAX_FILE_SIZE) {
-      const archiveName = `.observations-${new Date().toISOString().slice(0, 10)}.jsonl`;
+      const archiveName = `.observations-${new Date().toISOString().slice(0, 19).replace(/[:.]/g, '-')}.jsonl`;
       fs.renameSync(obsFile, path.join(instinctsDir, archiveName));
     }
   }

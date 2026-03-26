@@ -1,5 +1,5 @@
 const path = require('path');
-const { fileExists, readFile, ensureDir, respond, log } = require('./lib/utils');
+const { fileExists, readFile, respond, log } = require('./lib/utils');
 
 try {
   const cwd = process.cwd();

@@ -117,7 +117,7 @@ Checks whether automated quality hooks are configured.
 
 | # | Check | Method | Points |
 |---|-------|--------|--------|
-| 4.1 | settings.json has hooks configuration | Check `.claude/settings.json` exists and contains `"hooks"` key | +1 |
+| 4.1 | settings.json has hooks configuration | Check `.claude/settings.json` exists and contains `"hooks"` key. Note: hooks provided by installed plugins (e.g. in `hooks/hooks.json`) do not count here; this measures project-level configuration | +1 |
 | 4.2 | Has PostToolUse hook | Grep `.claude/settings.json` for `PostToolUse` (case-sensitive) | +1 |
 | 4.3 | Has Stop hook | Grep `.claude/settings.json` for `"Stop"` (as a hook event type) | +1 |
 | 4.4 | Has prompt-audit or equivalent review skill | Check `.claude/skills/` for a directory named `prompt-audit`, `code-review`, or similar; or grep skills for "audit" or "review" in skill names | +1 |
@@ -196,7 +196,7 @@ Checks whether the harness stays clean and current.
 |---|-------|--------|--------|
 | 7.1 | No single rule file exceeds 300 lines | Count lines in each file under `.claude/rules/`; pass if ALL files are under 300 lines | +1 |
 | 7.2 | No obvious contradictions between rules | Grep all rule files for contradiction patterns: same topic with opposing directives (e.g., one file says "use semicolons" and another says "no semicolons"). Check for files with identical heading names but different content. Pass if no duplicated or conflicting rule headings found | +1 |
-| 7.3 | docs/ has no files >90 days without update | Check `git log` or file modification dates for files in `.claude/docs/`; pass if all files were modified within the last 90 days | +1 |
+| 7.3 | docs/ has no files >90 days without update | Run `git log -1 --format=%ci -- <file>` for each file in `.claude/docs/`; pass if all files were committed within the last 90 days. Use git history (not file mtime, which resets on clone) | +1 |
 
 **Init guidance** (if dimension scores 0):
 ```

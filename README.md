@@ -28,7 +28,7 @@ This is NOT a replacement for Superpowers. It provides no Planner, no Generator,
 | Agent | 1 | security-reviewer (read-only) |
 | Skills | 4 | harness-audit, prompt-audit, strategic-compact, verification-loop |
 | Hooks | 5 | quality-gate, completion-guard, suggest-compact, observe, session-start |
-| Commands | 5 | /security-review, /harness-audit, /compact, /learn, /rules |
+| Commands | 5 | /security-review, /harness-audit, /save-compact, /learn, /rules |
 | Rules | 3 | workflow-map, harness-method, noise-filter |
 
 ## Quick start
@@ -43,7 +43,7 @@ This is NOT a replacement for Superpowers. It provides no Planner, no Generator,
 |---|---|
 | `/security-review` | Dispatch read-only security audit agent |
 | `/harness-audit` | Evaluate `.claude/` architecture maturity (7 dimensions, 0–23 score) |
-| `/compact` | Strategic context compression at logical boundaries |
+| `/save-compact` | Save state + compress context at logical boundaries |
 | `/learn` | Discover work patterns from operation records |
 | `/rules` | Quick rule management (list / check / suggest / add) |
 

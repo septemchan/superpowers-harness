@@ -12,13 +12,13 @@ try {
   const cwd = process.cwd();
 
   // .claude/ markdown files → suggest prompt-audit
-  if (filePath.includes('.claude') && ext === '.md') {
+  if ((filePath.includes('.claude/') || filePath.includes('.claude\\')) && ext === '.md') {
     respond('Edited .claude/ file. Consider running prompt-audit to check quality.');
     process.exit(0);
   }
 
   // Code files → run file-level linter
-  const codeExts = ['.ts', '.tsx', '.js', '.jsx', '.py', '.go'];
+  const codeExts = ['.ts', '.tsx', '.js', '.jsx', '.py'];
   if (!codeExts.includes(ext)) process.exit(0);
 
   // Detect available linter

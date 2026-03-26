@@ -21,12 +21,14 @@ Compact at **logical boundaries**, not in the middle of active work.
 | Waiting for user input | Asked a question, user hasn't answered | No |
 
 **Rule of thumb**: if you can summarize "what's done" and "what's next" as clean, separate items, it's a good boundary.
+
 ## What survives compaction (no need to save)
 
 - `CLAUDE.md` and `.claude/rules/` files
 - TodoWrite state
 - All files on disk (source code, configs, docs)
 - Git history and `.claude/settings.json`
+
 ## What's lost in compaction (must save before compact)
 
 - Intermediate reasoning and analysis
@@ -57,7 +59,7 @@ Do NOT re-explore broadly. The state file tells you exactly where to look.
 ## Hooks and commands
 
 - **suggest-compact hook** fires at ~50 tool calls. When it fires, check if you're at a logical boundary. If yes, suggest compacting. If no, acknowledge and compact at the next boundary.
-- **/compact command** triggers this skill directly. Follow the pre-compact checklist, then compact.
+- **/save-compact command** triggers this skill directly. Follow the pre-compact checklist, then run Claude Code's built-in /compact.
 
 ## State file template
 
