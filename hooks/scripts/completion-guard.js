@@ -1,6 +1,6 @@
 const { readStdin, log, respond } = require('./lib/utils');
 
-const SECURITY_PATTERNS = /auth|login|password|payment|token|secret|credential|session|jwt|oauth|encrypt|decrypt|hash|salt|cookie/i;
+const SECURITY_PATTERNS = /\b(auth|login|password|payment|token|secret|credential|session|jwt|oauth|encrypt|decrypt)\b/i;
 
 try {
   const input = readStdin();

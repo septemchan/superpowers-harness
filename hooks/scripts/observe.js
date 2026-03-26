@@ -4,7 +4,9 @@ const { readStdin, ensureDir, getSessionId, log } = require('./lib/utils');
 
 const MAX_FIELD_LEN = 5000;
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
-const SCRUB_PATTERNS = /\b(api[_-]?key|api[_-]?secret|auth[_-]?token|access[_-]?token|refresh[_-]?token|bearer\s+\S+|password|passwd|secret[_-]?key|credential|authorization:\s*\S+)\b[=:]\s*["']?[^\s"',}]{8,}/gi;
+const SCRUB_PATTERNS = /\b(api[_-]?key|api[_-]?secret|auth[_-]?token|access[_-]?token|refresh[_-]?token|password|passwd|secret[_-]?key|credential)\b[=:]\s*["']?[^\s"',}]{4,}/gi;
+const BEARER_PATTERN = /bearer\s+[A-Za-z0-9._\-]{20,}/gi;
+const AUTH_HEADER_PATTERN = /authorization:\s*(Bearer|Basic)\s+[A-Za-z0-9._\-]{20,}/gi;
 
 try {
   const input = readStdin();
@@ -13,7 +15,10 @@ try {
   const toolOutput = JSON.stringify(input?.tool_output || '').slice(0, MAX_FIELD_LEN);
 
   // Scrub sensitive data
-  const scrub = (s) => s.replace(SCRUB_PATTERNS, '[SCRUBBED]');
+  const scrub = (s) => s
+    .replace(SCRUB_PATTERNS, '[SCRUBBED]')
+    .replace(BEARER_PATTERN, '[SCRUBBED]')
+    .replace(AUTH_HEADER_PATTERN, '[SCRUBBED]');
 
   const cwd = process.cwd();
   const record = {
@@ -31,7 +36,7 @@ try {
 
   // Add observations to project root .gitignore
   const rootGitignore = path.join(cwd, '.gitignore');
-  const ignoreEntry = '.claude/instincts/.observations.jsonl';
+  const ignoreEntry = '.claude/instincts/.observations*.jsonl';
   try {
     const existing = fs.existsSync(rootGitignore) ? fs.readFileSync(rootGitignore, 'utf8') : '';
     if (!existing.includes(ignoreEntry)) {
