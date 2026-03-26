@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "SessionStart": [
+      { "type": "command", "command": "node hooks/scripts/session-start.js", "timeout": 5000 }
+    ],
+    "PreToolUse": [
+      { "type": "command", "command": "node hooks/scripts/suggest-compact.js", "timeout": 3000 }
+    ],
+    "PostToolUse": [
+      {
+        "type": "command",
+        "command": "node hooks/scripts/quality-gate.js",
+        "timeout": 10000,
+        "matcher": "Edit|Write|MultiEdit"
+      },
+      {
+        "type": "command",
+        "command": "node hooks/scripts/observe.js",
+        "timeout": 3000
+      }
+    ],
+    "Stop": [
+      { "type": "command", "command": "node hooks/scripts/completion-guard.js", "timeout": 5000 }
+    ]
+  }
+}
