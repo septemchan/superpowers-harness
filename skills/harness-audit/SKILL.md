@@ -23,7 +23,7 @@ This skill serves two modes depending on the current state of the project:
 ## Workflow
 
 1. Locate the `.claude/` directory in the project root. If it does not exist, report score 0 (L0 Manual) and switch to init guidance mode.
-2. Run each of the 7 dimensions below. For every check item, use deterministic methods only: file existence checks, line counts, content grep, directory listing. Do NOT use LLM judgment to determine pass/fail.
+2. Run each of the 7 dimensions below. For every check item, use deterministic methods only: file existence checks, line counts, content grep, directory listing. Use these methods (not LLM judgment) to determine pass/fail.
 3. Score each check item: 1 point if passing, 0 if not.
 4. Sum all points to get the total score (0-23).
 5. Determine the maturity level from the score table.
@@ -268,7 +268,7 @@ project's detected tech stack and structure.]
 
 ## Constraints
 
-- ALL checks must be deterministic: file existence, line counts, content grep, directory listing. No LLM judgment calls for pass/fail decisions.
+- Every check must be deterministic: file existence, line counts, content grep, directory listing. Pass/fail decisions come from these methods, not from LLM judgment.
 - Report every individual check item's result, not just dimension totals.
 - When suggesting improvements, prioritize dimensions with the lowest scores and highest impact.
 - For check 7.2 (contradictions), use a conservative approach: only flag clear textual contradictions found via grep, not semantic analysis. If uncertain, pass the check.

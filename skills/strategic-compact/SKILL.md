@@ -54,7 +54,7 @@ After compaction, restore working context in this order:
 3. Read the specific files mentioned in the state file to rebuild working context
 4. Confirm the plan with the user before resuming work
 
-Do NOT re-explore broadly. The state file tells you exactly where to look.
+Focus on the files listed in the state file rather than re-exploring broadly.
 
 ## Hooks and commands
 
